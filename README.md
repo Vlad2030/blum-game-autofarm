@@ -1,5 +1,6 @@
 # Blum game autofarm
 [Creator](https://t.me/chad_trade/)
+
 Small script to automate blum game play. Requires a JWT bearer token from web app.
 
 
