@@ -122,4 +122,4 @@ if __name__ == "__main__":
         ).split("-")
 
 
-    asyncio.run(easy_farm(jwt_bearer))
+    asyncio.run(easy_farm(jwt_bearer, blum_points_to_claim))
