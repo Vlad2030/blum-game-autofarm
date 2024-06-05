@@ -1,3 +1,2 @@
 asyncio>=3.4.3
 aiohttp>=3.8.6
-orjson>=3.9.10
