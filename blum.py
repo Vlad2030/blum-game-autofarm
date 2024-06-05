@@ -129,8 +129,11 @@ if __name__ == "__main__":
     if len(_blum_points_to_claim[0]) == 0:
         pass
 
+<<<<<<< HEAD
     if len(_blum_points_to_claim) == 2:
         blum_points_to_claim = []
         [blum_points_to_claim.append(int(amount)) for amount in _blum_points_to_claim]
 
+=======
+>>>>>>> d9b667b5e6126ed4326c85e899d8c71f2d6e328a
     asyncio.run(easy_farm(jwt_bearer, blum_points_to_claim))
