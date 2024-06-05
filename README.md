@@ -1,5 +1,5 @@
 # Blum game autofarm
-[Telegram](https://t.me/chad_trade/)
+[Telegram](https://t.me/chad_trade/) | [Guide [Ru]](https://telegra.ph/Gajd-BlumAutoFarmBot-05-30) | [Guide [En] (Soon)](https://t.me/chad_trade/)
 
 Small script to automate blum game play. Requires a JWT bearer token from web app.
 
