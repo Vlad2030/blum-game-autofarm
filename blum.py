@@ -2,28 +2,33 @@ print("Created by lalka2003\n")
 print("https://t.me/chad_trade\n" * 3)
 
 import asyncio
-import aiohttp
 import random
 
+import aiohttp
 
 jwt_bearer = ""
 blum_points_to_claim = [250, 300]
 
 
 class BlumClient:
-    def __init__(self, bearer: str) -> None:
+    def __init__(
+            self,
+            bearer: str,
+            proxy: str | None = None,
+    ) -> None:
         self.bearer = bearer
+        self.proxy = proxy
         self.headers = {"Authorization": self.bearer}
         self.session = aiohttp.ClientSession(
             base_url="https://game-domain.blum.codes",
             headers=self.headers,
         )
 
-
-    async def balance(self) -> dict:
+    async def balance(self) -> dict | None:
         _balance_raw = await self.session.request(
             url="/api/v1/user/balance",
             method="GET",
+            proxy=self.proxy,
         )
 
         _balance: dict = await _balance_raw.json()
@@ -34,10 +39,11 @@ class BlumClient:
         return _balance
 
 
-    async def play(self) -> dict:
+    async def play(self) -> dict | None:
         _play_raw = await self.session.request(
             url="/api/v1/game/play",
             method="POST",
+            proxy=self.proxy,
         )
 
         _play: dict = await _play_raw.json()
@@ -48,14 +54,12 @@ class BlumClient:
         return _play
 
 
-    async def claim(self, game_id: str, points: int = 300) -> bool:
+    async def claim(self, game_id: str, points: int = 300) -> bool | None:
         _claim_raw = await self.session.request(
             url="/api/v1/game/claim",
             method="POST",
-            json={
-                "gameId": game_id,
-                "points": points,
-            }
+            json={"gameId": game_id, "points": points},
+            proxy=self.proxy,
         )
 
         if _claim_raw.status != 200:
@@ -116,10 +120,17 @@ if __name__ == "__main__":
     if len(jwt_bearer) == 0:
         jwt_bearer = input("Paste your JWT: ")
 
-    if len(blum_points_to_claim) == 0:
-        blum_points_to_claim = input(
-            "BP's amount to claim (250-300): ",
-        ).split("-")
+    _blum_points_to_claim = input(
+        f"Enter BP's amount to claim,"
+        f" defaults {blum_points_to_claim[0]}-{blum_points_to_claim[1]} BP's."
+        f" Example 100-150 or press enter to skip: ",
+    ).split(sep="-")
 
+    if len(_blum_points_to_claim[0]) == 0:
+        pass
 
-    asyncio.run(easy_farm(jwt_bearer))
+    if len(_blum_points_to_claim) == 2:
+        blum_points_to_claim = []
+        [blum_points_to_claim.append(int(amount)) for amount in _blum_points_to_claim]
+
+    asyncio.run(easy_farm(jwt_bearer, blum_points_to_claim))
